@@ -206,7 +206,7 @@ class ProfileForm extends StatelessWidget {
               onPressed: () {
                 Navigator.pop(context);
                 Profile profile = Profile(name: nameController.text, email: '', contactNumber: '', country: '', city: '');
-                Provider.of<ProfileEditModel>(context,listen: false).profile = profile;
+                context.read<ProfileEditModel>().setProfile(profile);
               },
               child: const Text(
                 'Save',
