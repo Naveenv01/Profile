@@ -1,5 +1,7 @@
-import 'ProfilePage.dart';
 import 'package:flutter/material.dart';
+import 'package:profile/models/profile.dart';
+import 'package:profile/models/profile_edit_model.dart';
+import 'package:provider/provider.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({Key? key}) : super(key: key);
@@ -14,7 +16,7 @@ class _EditProfileState extends State<EditProfile> {
     return Scaffold(
       backgroundColor: const Color.fromRGBO(255, 251, 231, 1),
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.black,
         ),
         backgroundColor: Colors.transparent,
@@ -27,11 +29,20 @@ class _EditProfileState extends State<EditProfile> {
           ),
         ),
       ),
-      body: bodyUi(context: context),
+      body: const ProfileHolder(),
     );
   }
 
-  Padding bodyUi({required BuildContext context}) {
+ 
+}
+
+class ProfileHolder extends StatelessWidget {
+  const ProfileHolder({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Column(
@@ -54,13 +65,13 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ),
                   ),
-                  SizedBox(width: 20.0),
+                  const SizedBox(width: 20.0),
                   Container(
                       width: MediaQuery.of(context).size.width * 0.5,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(6.0),
                         border: Border.all(
-                          color: Color.fromRGBO(99, 11, 255, 1),
+                          color: const Color.fromRGBO(99, 11, 255, 1),
                           width: 2.0,
                         ),
                       ),
@@ -76,13 +87,21 @@ class _EditProfileState extends State<EditProfile> {
               ),
             ),
           ),
-          editPage(),
+           ProfileForm(),
         ],
       ),
     );
   }
+}
 
-  editPage() {
+class ProfileForm extends StatelessWidget {
+   ProfileForm({Key? key}) : super(key: key);
+
+  final TextEditingController nameController = TextEditingController();
+
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
       child: (Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -91,6 +110,7 @@ class _EditProfileState extends State<EditProfile> {
           style: TextStyle(fontSize: 16, color: Color.fromRGBO(38, 79, 108, 1)),
         ),
         TextFormField(
+          controller: nameController,
           decoration: const InputDecoration(
             labelText: 'Name',
             labelStyle: TextStyle(
@@ -165,19 +185,18 @@ class _EditProfileState extends State<EditProfile> {
         const SizedBox(
           height: 30,
         ),
-
         //textbutton
         Center(
           child: Container(
             //rounded corners
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 begin: Alignment.centerLeft,
                 end: Alignment.centerRight,
                 colors: [
-                  Color.fromRGBO(122, 98, 248, 1),
-                  Color.fromRGBO(99, 11, 255, 1)
+                   Color.fromRGBO(122, 98, 248, 1),
+                   Color.fromRGBO(99, 11, 255, 1)
                 ],
               ),
             ),
@@ -186,10 +205,12 @@ class _EditProfileState extends State<EditProfile> {
             child: TextButton(
               onPressed: () {
                 Navigator.pop(context);
+                Profile profile = Profile(name: nameController.text, email: '', contactNumber: '', country: '', city: '');
+                Provider.of<ProfileEditModel>(context,listen: false).profile = profile;
               },
-              child: Text(
+              child: const Text(
                 'Save',
-                style: TextStyle(
+                style:  TextStyle(
                   color: Colors.white,
                   fontSize: 16,
                 ),

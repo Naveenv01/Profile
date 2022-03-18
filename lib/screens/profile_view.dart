@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import 'package:profile/main.dart';
-
-import 'EditProfile.dart';
+import 'package:profile/models/profile_edit_model.dart';
+import 'package:provider/provider.dart';
+import 'edit_profile_view.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -10,7 +9,7 @@ class ProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromRGBO(255, 251, 231, 1),
+        backgroundColor: const Color.fromRGBO(255, 251, 231, 1),
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: Colors.transparent,
@@ -33,25 +32,26 @@ class ProfilePage extends StatelessWidget {
                       Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: CircleAvatar(
+                            const Padding(
+                              padding:  EdgeInsets.all(8.0),
+                              child:  CircleAvatar(
                                 radius: 40,
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 20.0,
                             ),
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              // ignore: prefer_const_literals_to_create_immutables
                               children: [
-                                Text(
+                                const Text(
                                   'John',
-                                  style: TextStyle(
+                                  style:  TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w600),
                                 ),
-                                Text(
+                                const Text(
                                   'abiut page',
                                   style: TextStyle(
                                       fontSize: 14,
@@ -61,7 +61,6 @@ class ProfilePage extends StatelessWidget {
                             )
                           ]),
                       const Text('profile')
-                      //TODO linear determinate progress bar
                     ],
                   ),
                   //a container with white background and rounded corners
@@ -72,17 +71,17 @@ class ProfilePage extends StatelessWidget {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(10)),
                       width: MediaQuery.of(context).size.width,
-                      padding: EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(10),
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('profile data'),
-                            Text('i have a great idea')
+                          children: const[
+                             Text('profile data'),
+                             Text('i have a great idea')
                           ]),
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10)),
@@ -90,11 +89,11 @@ class ProfilePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 0, 5),
+                        const Padding(
+                          padding: EdgeInsets.fromLTRB(15, 0, 0, 5),
                           child: Text(
                             'MY Activity',
-                            style: TextStyle(
+                            style:  TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w400,
                             ),
@@ -106,28 +105,28 @@ class ProfilePage extends StatelessWidget {
                           children: [
                             Container(
                               decoration: BoxDecoration(
-                                  color: Color.fromRGBO(249, 178, 88, 1),
+                                  color: const Color.fromRGBO(249, 178, 88, 1),
                                   borderRadius: BorderRadius.circular(10)),
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
+                                  children: const[
+                                     Text(
                                       '2',
-                                      style: TextStyle(
+                                      style:  TextStyle(
                                           fontSize: 20, color: Colors.white),
                                     ),
-                                    Text(
+                                     Text(
                                       'i have a great idea',
-                                      style: TextStyle(color: Colors.white),
+                                      style:  TextStyle(color: Colors.white),
                                     )
                                   ]),
                             ),
                             Container(
                               decoration: BoxDecoration(
-                                  color: Color.fromRGBO(247, 89, 86, 1),
+                                  color: const Color.fromRGBO(247, 89, 86, 1),
                                   borderRadius: BorderRadius.circular(10)),
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               child: Column(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: const [
@@ -147,131 +146,143 @@ class ProfilePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  backroundView(context: context),
+                  const ProfileField(),
                 ]),
           ),
         ));
   }
 
-  backroundView({required BuildContext context}) {
+}
+
+class ProfileField extends StatelessWidget {
+  const ProfileField({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 15, 0, 15),
       child: (Container(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(10)),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            Text(
+            const Text(
               'Backround',
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               'Name',
-              style: TextStyle(fontSize: 10),
+              style:  TextStyle(fontSize: 10),
             ),
-            Text('Jonathan',
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w400,
-                    color: Colors.black)),
-            SizedBox(
+             Consumer<ProfileEditModel>(
+               builder: (context,model,child) {
+                 return Text(model.profile.name,
+                    style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black));
+               }
+             ),
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               'Contact no',
               style: TextStyle(fontSize: 10),
             ),
-            Text('+91-9888888888',
+            const Text('+91-9888888888',
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                     color: Colors.black)),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               'Gender',
               style: TextStyle(fontSize: 10),
             ),
-            Text('male',
-                style: TextStyle(
+            const Text('male',
+                style:  TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                     color: Colors.black)),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               'What i am currently doing',
               style: TextStyle(fontSize: 10),
             ),
-            Text('Coding',
+            const Text('Coding',
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                     color: Colors.black)),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               'Parent email id',
               style: TextStyle(fontSize: 10),
             ),
-            Text('Parent@gmail.com',
+            const Text('Parent@gmail.com',
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                     color: Colors.black)),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               'whick grade i am in',
               style: TextStyle(fontSize: 10),
             ),
-            Text('10',
+            const Text('10',
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                     color: Colors.black)),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
-            Text(
+            const Text(
               'which grade i am boarded in',
               style: TextStyle(fontSize: 10),
             ),
-            Text('Jonathan',
+            const Text('Jonathan',
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w400,
                     color: Colors.black)),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextButton(
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => EditProfile()));
+                      MaterialPageRoute(builder: (context) => const EditProfile()));
                 },
                 child: Container(
                   decoration: BoxDecoration(
                     //outlined rounded border
                     borderRadius: BorderRadius.circular(5),
                     border: Border.all(
-                      color: Color.fromRGBO(99, 11, 255, 1),
+                      color: const Color.fromRGBO(99, 11, 255, 1),
                       width: 1,
                     ),
                   ),
                   width: double.infinity,
-                  child: Center(
+                  child: const Center(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: Text(
                         'Edit',
                         style: TextStyle(

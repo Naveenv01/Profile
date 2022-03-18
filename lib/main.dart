@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:profile/screens/EditProfile.dart';
-import 'package:profile/screens/ProfilePage.dart';
+import 'package:profile/models/profile_edit_model.dart';
+import 'package:profile/screens/profile_view.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(create: (_) => ProfileEditModel(),
+  child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
